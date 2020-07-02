@@ -6,10 +6,7 @@ import { firestoreReducer } from "redux-firestore";
 import asyncReducer from '../asyncReducers/asyncReducers'
 
 import dialogReducer from '../dialogReducer/dialogReducer'
-import boardMemberReducer from "../boardMembersReducer/boardMemberReducer";
-import listingReducer from "../listingReducers/listingReducer";
 
-import userReducer from "../userReducer/userReducer";
 
 const rootReducer = combineReducers({
   // ASYNC
@@ -25,14 +22,7 @@ const rootReducer = combineReducers({
   // DIALOG REDUCER
   dialog: dialogReducer,
 
-  // BOARD MEMBER REDUCER
-  boardMembers: boardMemberReducer,
 
-  // LISTINGS REDUCERS
-  listings: listingReducer,
-
-  // USER REDUCERS
-  user: userReducer
 
 });
 
