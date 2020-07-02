@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react';
 import {makeStyles, useTheme} from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -21,7 +20,6 @@ const CheckboxInput = ({input, label, value, checkboxClass, checkboxLabelClass, 
             <FormControlLabel
                 control={
                     <Checkbox
-                        // checked={input.value ? true : false}
                         checked={value}
                         onChange={input.onChange}
                         color={'primary'}
