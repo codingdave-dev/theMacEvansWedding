@@ -8,8 +8,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Button from "@material-ui/core/Button";
 import Link from "../ui/Link";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+
 
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
@@ -56,9 +55,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   logo: {
-    height: "3.5em",
+    height: "2.8em",
     [theme.breakpoints.down("md")]: {
-      height: "3em",
+      height: "2.6em",
+    },
+    [theme.breakpoints.down("sm")]: {
+      height: "2em",
     },
   },
   logoContainer: {
@@ -73,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tab: {
     ...theme.typography.tab,
+    color: theme.palette.common.white,
     minWidth: 10,
     marginLeft: "25px",
     "&:hover": {
@@ -145,7 +148,6 @@ const Header = ({
   logout,
   auth,
   profile,
-  admin,
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -198,48 +200,26 @@ const Header = ({
     setSelectedIndex(i);
   };
 
-  const authMenuOptions = [
-    {
-      name: "Add Listing",
-      link: "/listing/newListing",
-      activeIndex: 5,
-      selectedIndex: 0,
-    }
-  ];
 
   const routes = [
     { name: "Home", link: "/", activeIndex: 0 },
+    { name: "RSVP", link: "/rsvp", activeIndex: 1 },
+    { name: "Wedding Party", link: "/wedding_party", activeIndex: 2 },
+    { name: "Event", link: "/event", activeIndex: 3 },
+    { name: "Venue", link: "/venue", activeIndex: 4 },
+    { name: "Photos", link: "/photos", activeIndex: 5 },
+    { name: "Registry", link: "/registry", activeIndex: 6 },
+    { name: "Contact", link: "/contact", activeIndex: 7, end: true },
 
   ];
 
-  const authRoutes = [
-    {
-      name: "Admin Area",
-      link: "/admin",
-      activeIndex: 4,
-    }
-  ];
-
-  const buttonRoutes = [
-    {
-      name: "Login",
-      onClick: () => handleSignIn(),
-    },
-    {
-      name: "Register",
-      onClick: () => handleRegister(),
-    },
-  ];
 
   useEffect(() => {
-    [...authMenuOptions, ...authRoutes, ...routes].forEach((route) => {
+    [...routes].forEach((route) => {
       switch (window.location.pathname) {
         case `${route.link}`:
           if (value !== route.activeIndex) {
             setValue(route.activeIndex);
-            if (route.selectedIndex && route.selectedIndex !== selectedIndex) {
-              setSelectedIndex(route.selectedIndex);
-            }
           }
           break;
         default:
@@ -249,8 +229,6 @@ const Header = ({
   }, [
     value,
     setValue,
-    authMenuOptions,
-      authRoutes,
     selectedIndex,
     setSelectedIndex,
     routes,
@@ -267,83 +245,17 @@ const Header = ({
             {routes.map((route, index) => (
                 <Tab
                     key={`${route}${index}`}
-                    className={classes.tab}
+                    // className={classes.tab}
+                    className={route.end ? classes.tab + ' ' + classes.tabEnd : classes.tab}
                     component={Link}
                     href={route.link}
                     label={route.name}
                 />
             ))}
 
-            {/*AUTH ROUTES*/}
-            {authenticated &&
-            authenticated &&
-            authRoutes.map((route, index) => (
-                <Tab
-                    key={`${route}${index}`}
-                    className={
-                      route.end ? classes.tab + " " + classes.tabEnd : classes.tab
-                    }
-                    component={Link}
-                    href={route.link}
-                    label={route.name}
-                    aria-owns={route.ariaOwns}
-                    aria-haspopup={route.ariaPopup}
-                    onMouseOver={route.mouseOver}
-                />
-            ))}
           </Tabs>
 
-          {/*DROPDOWN MENU*/}
-          <Menu
-              id={"simple-menu"}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              classes={{ paper: classes.menu }}
-              MenuListProps={{ onMouseLeave: handleClose }}
-              elevation={0}
-              style={{ zIndex: 1302 }}
-              keepMounted
-          >
-            {authMenuOptions.map((option, i) => (
-                <MenuItem
-                    key={option.name}
-                    component={Link}
-                    href={option.link}
-                    classes={{ root: classes.menuItem }}
-                    onClick={(event) => {
-                      handleMenuItemClick(event, i);
-                      setValue(option.activeIndex);
-                      setSelectedIndex(option.selectedIndex)
-                      handleClose();
-                      if (option.link === '/logout') {
-                        handleSignOut()
-                      }
-                    }}
-                    selected={i === selectedIndex && value === 1}
-                >
-                  {option.name}
-                </MenuItem>
-            ))}
-          </Menu>
 
-          {/*NO AUTH BUTTONS*/}
-          {!authenticated &&
-          !authenticated &&
-          buttonRoutes.map((button) => (
-              <Button
-                  key={button.name}
-                  variant="outlined"
-                  className={classes.navButton}
-                  style={{
-                    marginLeft: button.name === "Login" ? "25px" : "5px",
-                    marginRight: button.name === "Login" ? null : "25px",
-                  }}
-                  onClick={button.onClick}
-              >
-                {button.name}
-              </Button>
-          ))}
         </Fragment> : null}
       </Fragment>
 
@@ -383,75 +295,33 @@ const Header = ({
             </ListItem>
           ))}
 
-          {authenticated && authenticated && (
-              <div style={{marginTop: '1em'}}>
-                {authRoutes.map((route) => (
-                    <ListItem
-                        key={`${route}${route.activeIndex}`}
-                        onClick={() => {
-                          setOpenDrawer(false);
-                          setValue(route.activeIndex);
-                          setSelectedIndex(null);
-                        }}
-                        divider
-                        button
-                        component={Link}
-                        href={route.link}
-                        selected={value === route.activeIndex}
-                        classes={{ selected: classes.drawerItemSelected }}
-                    >
-                      <ListItemText className={classes.drawerItem} disableTypography>
-                        {route.name}
-                      </ListItemText>
-                    </ListItem>
-                ))}
-              </div>
-          )}
+          {/*{authenticated && authenticated && (*/}
+          {/*    <div style={{marginTop: '1em'}}>*/}
+          {/*      {authRoutes.map((route) => (*/}
+          {/*          <ListItem*/}
+          {/*              key={`${route}${route.activeIndex}`}*/}
+          {/*              onClick={() => {*/}
+          {/*                setOpenDrawer(false);*/}
+          {/*                setValue(route.activeIndex);*/}
+          {/*                setSelectedIndex(null);*/}
+          {/*              }}*/}
+          {/*              divider*/}
+          {/*              button*/}
+          {/*              component={Link}*/}
+          {/*              href={route.link}*/}
+          {/*              selected={value === route.activeIndex}*/}
+          {/*              classes={{ selected: classes.drawerItemSelected }}*/}
+          {/*          >*/}
+          {/*            <ListItemText className={classes.drawerItem} disableTypography>*/}
+          {/*              {route.name}*/}
+          {/*            </ListItemText>*/}
+          {/*          </ListItem>*/}
+          {/*      ))}*/}
+          {/*    </div>*/}
+          {/*)}*/}
 
 
 
-
-
-          {!authenticated &&
-            !authenticated &&
-            buttonRoutes.map((button) => (
-              <ListItem
-                key={button.name}
-                onClick={button.onClick}
-                divider
-                button
-              >
-                <ListItemText className={classes.drawerItem} disableTypography>
-                  {button.name}
-                </ListItemText>
-              </ListItem>
-            ))}
-
-          {authenticated &&
-            authenticated &&
-            authMenuOptions.map((route) => (
-              <ListItem
-                key={route.selectedIndex}
-                onClick={() => {
-                  setOpenDrawer(false);
-                  setSelectedIndex(route.selectedIndex);
-                  if (route.link === '/logout') {
-                    handleSignOut()
-                  }
-                }}
-                divider
-                button
-                component={Link}
-                href={route.link}
-                selected={selectedIndex === route.selectedIndex}
-                classes={{ selected: classes.drawerItemSelected }}
-
-              >
-                <ListItemText className={classes.drawerItem} disableTypography>
-                  {route.name}
-                </ListItemText>
-              </ListItem>
-            ))}
         </List>
       </SwipeableDrawer>
 
@@ -478,7 +348,7 @@ const Header = ({
               onClick={() => setValue(0)}
             >
               <img
-                src={"/assets/logo/dg_logo.jpg"}
+                src={"/assets/logo.jpeg"}
                 className={classes.logo}
                 alt="company-logo"
               />
