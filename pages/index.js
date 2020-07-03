@@ -6,7 +6,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles((theme) => ({
   name: {
-    color: theme.palette.primary.main,
     [theme.breakpoints.down("md")]: {
       fontSize: "4em",
     },
@@ -15,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   date: {
-    color: theme.palette.primary.main,
     [theme.breakpoints.down("md")]: {
       fontSize: "3em",
     },
@@ -31,9 +29,6 @@ const useStyles = makeStyles((theme) => ({
       width: '8em'
     }
   },
-  bodyText: {
-    color: theme.palette.common.grey
-  }
 }));
 
 const Index = () => {
@@ -97,7 +92,7 @@ const Index = () => {
               <Grid item lg={10} md={10} style={matchesSM ? { marginTop: "1em" } : {paddingLeft: '1em'}}>
                 <Grid item container direction={"column"}>
                   <Grid item>
-                    <Typography variant={"body1"} className={classes.bodyText}>
+                    <Typography variant={"body1"} >
                       How did we meet, you may wonder? Well, we kind of met back
                       in the winter of 2015 when Dave stayed at the hotel I
                       worked at for the tour rehearsal of Taylor Swift’s 1989
@@ -108,7 +103,7 @@ const Index = () => {
                     </Typography>
                   </Grid>
                   <Grid item style={{ marginTop: "2em" }}>
-                    <Typography variant={"body1"} className={classes.bodyText}>
+                    <Typography variant={"body1"} >
                       One of my friend's from work became friends with someone
                       on the crew and we ended up going to see a show in
                       Louisville, Kentucky. We ended up at a dive bar in
@@ -128,7 +123,7 @@ const Index = () => {
                     </Typography>
                   </Grid>
                   <Grid item style={{ marginTop: "2em" }}>
-                    <Typography variant={"body1"} className={classes.bodyText}>
+                    <Typography variant={"body1"} >
                       Fast forward to spring of 2017 and many laughs and
                       memories. I made dinner reservations at one of our
                       favorite steakhouses in Nashville and Dave was acting
@@ -142,7 +137,7 @@ const Index = () => {
                     </Typography>
                   </Grid>
                   <Grid item style={{ marginTop: "2em" }}>
-                    <Typography variant={"body1"} className={classes.bodyText}>
+                    <Typography variant={"body1"} >
                       We are so lucky to have met each other. We have had so
                       many laughs and done so many great things together, and we
                       can’t wait to see what the future brings as husband and
