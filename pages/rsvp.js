@@ -3,6 +3,11 @@ import {makeStyles, useTheme} from "@material-ui/core/styles";
 import {Grid} from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Typography from "@material-ui/core/Typography";
+import {connect} from "react-redux";
+import {Field, reduxForm} from "redux-form";
+import TextInput from "../src/common/form/TextInput";
+import Button from "@material-ui/core/Button";
+import {getRSVPDetails} from "../src/store/actions/rsvpActions/rsvpActions";
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -23,7 +28,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Rsvp = () => {
+const actions = {
+    getRSVPDetails
+}
+
+const Rsvp = ({getRSVPDetails, handleSubmit, error, submitting}) => {
     const classes = useStyles();
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -62,8 +71,47 @@ const Rsvp = () => {
             <Grid item style={{marginTop: '3em'}}>
                 <Typography variant={'subtitle1'} className={classes.subTitle} align={'center'}>Enter the details found on your invitation below.</Typography>
             </Grid>
+
+
+
+            {/*RSVP FORM*/}
+            <Grid item>
+                <form autoComplete={"off"} onSubmit={handleSubmit(getRSVPDetails)}>
+                    <Grid container direction={"column"} className={classes.loginContainer}>
+                        <Grid item style={{ marginTop: "1em" }}>
+                            <Field
+                                label={"Guest ID"}
+                                name={"guestID"}
+                                type={'text'}
+                                variant={"outlined"}
+                                component={TextInput}
+                            />
+                        </Grid>
+                        <Grid item style={{ marginTop: "1.5em" }}>
+                            <Field
+                                label={"Access Code"}
+                                name={"accessCode"}
+                                type={'text'}
+                                variant={"outlined"}
+                                component={TextInput}
+                            />
+                        </Grid>
+                        {error &&
+                        <Grid item style={{marginTop: '0.5em'}} >
+                            <Typography variant={'subtitle1'} className={classes.error}>{error}</Typography>
+                        </Grid>
+                        }
+
+                        <Grid item style={{ marginTop: "1.2em", marginBottom: "1.2em" }}>
+                            <Button variant="outlined" color="primary" fullWidth type={'submit'} disabled={submitting}>
+                                RSVP
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </form>
+            </Grid>
         </Grid>
     );
 };
 
-export default Rsvp;
+export default connect(null, actions) (reduxForm({ form: "rsvpForm" }) (Rsvp));

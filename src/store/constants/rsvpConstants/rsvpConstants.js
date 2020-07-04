@@ -1,0 +1,1 @@
+export const GET_GUEST_RSVP = 'GET_GUEST_RSVP'

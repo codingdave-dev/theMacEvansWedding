@@ -6,6 +6,7 @@ import { firestoreReducer } from "redux-firestore";
 import asyncReducer from '../asyncReducers/asyncReducers'
 
 import dialogReducer from '../dialogReducer/dialogReducer'
+import rsvpReducer from "../rsvpReducer/rsvpReducer";
 
 
 const rootReducer = combineReducers({
@@ -22,6 +23,8 @@ const rootReducer = combineReducers({
   // DIALOG REDUCER
   dialog: dialogReducer,
 
+  // RSVP REDUCER
+  rsvp: rsvpReducer,
 
 
 });
